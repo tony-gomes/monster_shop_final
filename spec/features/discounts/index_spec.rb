@@ -66,8 +66,8 @@ RSpec.describe 'As a merchant' do
             expect(page).to have_content("Quantity: #{Discount.last.quantity}")
           end
 
-          expect(Discount.last.percantage).to eql("30")
-          expect(Discount.last.quantity).to eql("7")
+          expect(Discount.last.percentage).to eql(30)
+          expect(Discount.last.quantity).to eql(7)
         end
       end
     end
