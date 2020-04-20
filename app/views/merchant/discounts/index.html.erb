@@ -17,6 +17,7 @@
   <div id="discount-<%= discount.id %>">
     <h3>Percentage: <%= discount.percentage %>%</h3>
     <h3>Quantity: <%= discount.quantity %></h3>
+    <%= link_to "Delete Discount", "/merchant/discounts/#{discount.id}", method: :delete %>
   </div>
 <% end %>
 
