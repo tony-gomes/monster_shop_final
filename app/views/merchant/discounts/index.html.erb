@@ -1,0 +1,22 @@
+<h1>Discounts</h1>
+
+<div class="add_discount_form">
+  <h2>Add New Discount:</h2>
+
+  <%= form_with model: @discount, url: "/merchant/discounts", method: :new, local:true do |f| %>
+    <%= f.label :percentage %>
+    <%= f.text_field :percentage %>
+    <%= f.label :quantity %>
+    <%= f.text_field :quantity %>
+    <%= f.submit "Submit" %>
+  <% end %>
+</div>
+
+<h2>All Discounts:</h2>
+<% @discounts.each do |discount| %>
+  <div id="discount-<%= discount.id %>">
+    <h3>Percentage: <%= discount.percentage %>%</h3>
+    <h3>Quantity: <%= discount.quantity %></h3>
+  </div>
+<% end %>
+
