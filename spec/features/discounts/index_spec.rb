@@ -71,5 +71,81 @@ RSpec.describe 'As a merchant' do
         end
       end
     end
+
+    describe 'On the Discounts index page each discount has a delete link' do
+      context 'And when I click it I am redirected back to the index page' do
+        it 'And I no longer see the discount in the list of discounts' do
+          visit "/merchant/discounts"
+
+          expect(page).to have_content("All Discounts:")
+
+          within("#discount-#{@discount1.id}") do
+            expect(page).to have_content("Percentage: 5%")
+            expect(page).to have_content("Quantity: 2")
+            expect(page).to have_link("Delete Discount")
+          end
+
+          within("#discount-#{@discount2.id}") do
+            expect(page).to have_content("Percentage: 10%")
+            expect(page).to have_content("Quantity: 3")
+            expect(page).to have_link("Delete Discount")
+            click_link "Delete Discount"
+          end
+
+          expect(page).to have_no_css("#discount-#{@discount2.id}")
+
+          within("#discount-#{@discount3.id}") do
+            expect(page).to have_content("Percentage: 25%")
+            expect(page).to have_content("Quantity: 5")
+            expect(page).to have_link("Delete Discount")
+          end
+        end
+      end
+
+      describe 'On the Discounts index page each discount has an udpate link' do
+        context 'And when I click it I am taken to a form to update discount' do
+          it 'When I submit I am redirected back to the discounts page' do
+            visit "/merchant/discounts"
+
+            expect(page).to have_content("All Discounts:")
+
+            within("#discount-#{@discount1.id}") do
+              expect(page).to have_content("Percentage: 5%")
+              expect(page).to have_content("Quantity: 2")
+              expect(page).to have_link("Update Discount")
+              expect(page).to have_link("Delete Discount")
+            end
+
+            within("#discount-#{@discount2.id}") do
+              expect(page).to have_content("Percentage: 10%")
+              expect(page).to have_content("Quantity: 3")
+              expect(page).to have_link("Update Discount")
+              expect(page).to have_link("Delete Discount")
+              click_link "Update Discount"
+            end
+
+            expect(current_path).to eql("/merchant/discount/update")
+
+            fill_in :percentage, with: 15
+            click_button "Submit"
+
+            within("#discount-#{@discount2.id}") do
+              expect(page).to have_content("Percentage: 15%")
+              expect(page).to have_content("Quantity: 3")
+              expect(page).to have_link("Update Discount")
+              expect(page).to have_link("Delete Discount")
+              click_link "Update Discount"
+            end
+
+            within("#discount-#{@discount3.id}") do
+              expect(page).to have_content("Percentage: 25%")
+              expect(page).to have_content("Quantity: 5")
+              expect(page).to have_link("Update Discount")
+              expect(page).to have_link("Delete Discount")
+            end
+          end
+        end
+      end
+    end
   end
 end
