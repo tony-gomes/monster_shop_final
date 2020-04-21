@@ -1,7 +1,2 @@
-<%= form_with(model: [:merchant, @discount]) do |f| %>
-  <%= f.label :percentage %>
-  <%= f.text_field :percentage %>
-  <%= f.label :quantity %>
-  <%= f.text_field :quantity %>
-  <%= f.submit "Submit" %>
-<% end %>
+<%= render partial: "layouts/partials/discount_form" %>
+
