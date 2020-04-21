@@ -1,6 +1,7 @@
 class Merchant::DiscountsController < Merchant::BaseController
   def index
     @discounts = Discount.all
+    @discount = Discount.new
   end
 
   def new
@@ -23,10 +24,11 @@ class Merchant::DiscountsController < Merchant::BaseController
 
   def update
     @discount = Discount.find(params[:id])
+
     if @discount.update(discount_params)
       redirect_to "/merchant/discounts"
     else
-      generate_flash(@discount)
+      generate_flash(discount)
       render :edit
     end
   end
@@ -40,6 +42,6 @@ class Merchant::DiscountsController < Merchant::BaseController
   private
 
   def discount_params
-    params.permit(:percentage, :quantity)
+    params.require(:discount).permit(:percentage, :quantity)
   end
 end
