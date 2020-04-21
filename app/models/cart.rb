@@ -1,5 +1,5 @@
 class Cart
-  attr_reader :contents
+  attr_reader :contents, :discount
 
   def initialize(contents)
     @contents = contents || {}
