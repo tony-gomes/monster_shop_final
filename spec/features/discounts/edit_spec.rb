@@ -56,6 +56,7 @@ RSpec.describe 'As a merchant' do
           expect(page).to have_link("Delete Discount")
           click_link "Edit Discount"
         end
+
         @discount2.reload
         expect(@discount2.percentage).to eql(15)
         expect(@discount2.quantity).to eql(3)
