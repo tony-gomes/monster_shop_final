@@ -39,13 +39,15 @@ RSpec.describe 'As a merchant' do
           expect(page).to have_link("Delete Discount")
           click_link "Edit Discount"
         end
+        expect(@discount2.percentage).to eql(10)
+        expect(@discount2.quantity).to eql(3)
 
-        expect(page).to eql("/merchant/discounts/#{@discount2.id}/edit")
+        expect(current_path).to eql("/merchant/discounts/#{@discount2.id}/edit")
         fill_in "discount[percentage]", with: 15
         fill_in "discount[quantity]", with: 3
         click_button "Submit"
 
-        expect(page).to eql("/merchant/discounts")
+        expect(current_path).to eql("/merchant/discounts")
 
         within("#discount-#{@discount2.id}") do
           expect(page).to have_content("Percentage: 15%")
@@ -54,13 +56,9 @@ RSpec.describe 'As a merchant' do
           expect(page).to have_link("Delete Discount")
           click_link "Edit Discount"
         end
-
-        within("#discount-#{@discount3.id}") do
-          expect(page).to have_content("Percentage: 25%")
-          expect(page).to have_content("Quantity: 5")
-          expect(page).to have_link("Edit Discount")
-          expect(page).to have_link("Delete Discount")
-        end
+        @discount2.reload
+        expect(@discount2.percentage).to eql(15)
+        expect(@discount2.quantity).to eql(3)
       end
     end
   end
